@@ -46,6 +46,9 @@ namespace UnityEngine
         [Space(5)]
         [Tooltip("flag to decide if the directional light color is going to be randomized")]
         [SerializeField] bool isColorRandomized = true;
+        [Space(5)]
+        [Tooltip("flag to decide if the skybox is going to be randomized")]
+        [SerializeField] bool useSkyBoxRandomization = false;
         
         
 
@@ -101,8 +104,11 @@ namespace UnityEngine
             MeshRenderer modelMeshRenderer = loadedModel.GetComponent<MeshRenderer>();
             modelMeshRenderer.material = spawnNextModelMaterial();
 
-            RenderSettings.skybox = spawnNextSkyMaterial();
-            DynamicGI.UpdateEnvironment();
+            if (useSkyBoxRandomization)
+            {
+                RenderSettings.skybox = spawnNextSkyMaterial();
+                DynamicGI.UpdateEnvironment();
+            }
 
             dirLight.transform.rotation = Random.rotation;
             Light tempLight = dirLight.GetComponent<Light>();
